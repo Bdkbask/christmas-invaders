@@ -38,7 +38,7 @@ class Player(pg.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pg.image.load(resource_path("pereNoel.png")).convert_alpha()
+        self.image = pg.image.load(resource_path("assets/pereNoel.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.x, self.y)
 
@@ -70,7 +70,7 @@ class Wall(pg.sprite.Sprite):
         self.x = x
 
         # Load the image (your sprite graphic)
-        self.image = pg.image.load(resource_path("giftWall.png")).convert_alpha()
+        self.image = pg.image.load(resource_path("assets/giftWall.png")).convert_alpha()
 
         # A rect is needed for position & collision
         self.rect = self.image.get_rect()
@@ -89,7 +89,7 @@ class SnowBall(pg.sprite.Sprite):
         self.x = x
         self.y = y
         self.ally = ally
-        self.image = pg.image.load(resource_path("boule_de_neige.png")).convert_alpha()
+        self.image = pg.image.load(resource_path("assets/boule_de_neige.png")).convert_alpha()
 
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.x, self.y)
@@ -117,8 +117,8 @@ class Enemy(pg.sprite.Sprite):
     def __init__(self, fPosition, maxShootDelay):
         super().__init__()
         self.images =  [
-            pg.image.load(resource_path("lutin1.png")).convert_alpha(),
-            pg.image.load(resource_path("lutin2.png")).convert_alpha()
+            pg.image.load(resource_path("assets/lutin1.png")).convert_alpha(),
+            pg.image.load(resource_path("assets/lutin2.png")).convert_alpha()
         ]
         self.maxShootDelay = max(maxShootDelay, self.minShootDelay)
         self.shootDelay = random.randint(self.minShootDelay, self.maxShootDelay)
