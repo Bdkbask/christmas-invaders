@@ -1,12 +1,10 @@
-name: Build Windows EXE
+name: Build and Release Games
 
-on: 
-  push:
-    branches: [ "main" ]  # Se déclenche quand vous poussez sur la branche main
+on: [push, workflow_dispatch] # workflow_dispatch permet de lancer manuellement
 
 jobs:
   build:
-    runs-on: windows-latest  # On utilise un serveur Windows
+    runs-on: windows-latest
 
     steps:
       - name: Recupérer le code
