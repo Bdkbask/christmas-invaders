@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         # On définit les deux fichiers source ici
-        file: [christmasInvader.py, SpaceInvaders.py]
+        file: [christmasInvader.py, SpaceInvader.py]
 
     steps:
       - name: Récupérer le code
