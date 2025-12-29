@@ -24,7 +24,7 @@ jobs:
         # 'run' est obligatoire pour lancer des commandes shell
 
       - name: Créer l'executable
-        run: pyinstaller --onefile --noconsole --add-data "assets;assets" christmasInvaders.py
+        run: pyinstaller --onefile --noconsole --add-data "assets;assets" christmasInvader.py
         # Remplacez 'mon_jeu.py' par le nom de votre fichier principal
 
       - name: Sauvegarder l'EXE 
