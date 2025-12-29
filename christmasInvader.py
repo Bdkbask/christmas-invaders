@@ -2,6 +2,9 @@ from math import sqrt
 import pygame as pg
 import random
 
+import os
+import sys
+
 SCREEN_WIDTH = 1800
 SCREEN_HEIGHT = 1000
 ENEMY_WIDTH = 29
@@ -16,6 +19,14 @@ WALLS_AMOUNT = 4
 WALLS_WIDTH = 150
 
 
+def resource_path(relative_path):
+    """ Gestion des chemins pour le développement et pour l'EXE """
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 class Player(pg.sprite.Sprite):
     x = SCREEN_WIDTH//2
     y = PLAYER_Y
@@ -24,7 +35,7 @@ class Player(pg.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pg.image.load("pereNoel.png").convert_alpha()
+        self.image = pg.image.load("assets/pereNoel.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.x, self.y)
 
@@ -56,7 +67,7 @@ class Wall(pg.sprite.Sprite):
         self.x = x
 
         # Load the image (your sprite graphic)
-        self.image = pg.image.load("giftWall.png").convert_alpha()
+        self.image = pg.image.load("assets/giftWall.png").convert_alpha()
 
         # A rect is needed for position & collision
         self.rect = self.image.get_rect()
@@ -75,7 +86,7 @@ class SnowBall(pg.sprite.Sprite):
         self.x = x
         self.y = y
         self.ally = ally
-        self.image = pg.image.load("boule_de_neige.png").convert_alpha()
+        self.image = pg.image.load("assets/boule_de_neige.png").convert_alpha()
 
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.x, self.y)
@@ -103,8 +114,8 @@ class Enemy(pg.sprite.Sprite):
     def __init__(self, fPosition, maxShootDelay):
         super().__init__()
         self.images =  [
-            pg.image.load("lutin1.png").convert_alpha(),
-            pg.image.load("lutin2.png").convert_alpha()
+            pg.image.load("assets/lutin1.png").convert_alpha(),
+            pg.image.load("assets/lutin2.png").convert_alpha()
         ]
         self.maxShootDelay = max(maxShootDelay, self.minShootDelay)
         self.shootDelay = random.randint(self.minShootDelay, self.maxShootDelay)
