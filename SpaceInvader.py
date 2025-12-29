@@ -109,7 +109,7 @@ class PereNoel(pygame.sprite.Sprite):
 	cd = 20
 	def __init__(self):
 		super().__init__()
-		self.image=pygame.image.load(resource_path("assets/pereNoel.png").convert_alpha()
+		self.image=pygame.image.load(resource_path("assets/pereNoel.png")).convert_alpha()
 		self.rect=self.image.get_rect()
 		self.rect.topleft=(self.x,self.y)
 
