@@ -20,11 +20,14 @@ WALLS_WIDTH = 150
 
 
 def resource_path(relative_path):
-    """ Gestion des chemins pour le développement et pour l'EXE """
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
+    """ Gestion ultra-fiable des chemins pour PyInstaller """
+    if hasattr(sys, '_MEIPASS'):
+        # On est dans l'EXE : PyInstaller décompresse dans ce dossier temporaire
+        return os.path.join(sys._MEIPASS, relative_path)
+    
+    # On est en développement : on utilise le chemin réel du fichier .py
+    # C'est ici que ça change : on part du dossier du SCRIPT, pas du dossier de CMD
+    base_path = os.path.abspath(os.path.dirname(__file__))
     return os.path.join(base_path, relative_path)
 
 class Player(pg.sprite.Sprite):
