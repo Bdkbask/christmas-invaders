@@ -1,9 +1,23 @@
 import pygame
 
 import random
+import os
+import sys
 
 SCREEN_WIDTH=1000
 SCREEN_HEIGHT=800
+
+def resource_path(relative_path):
+    """ Gestion ultra-fiable des chemins pour PyInstaller """
+    if hasattr(sys, '_MEIPASS'):
+        # On est dans l'EXE : PyInstaller décompresse dans ce dossier temporaire
+        return os.path.join(sys._MEIPASS, relative_path)
+    
+    # On est en développement : on utilise le chemin réel du fichier .py
+    # C'est ici que ça change : on part du dossier du SCRIPT, pas du dossier de CMD
+    base_path = os.path.abspath(os.path.dirname(__file__))
+    return os.path.join(base_path, relative_path)
+
 
 class MechanteBouleDeNeige(pygame.sprite.Sprite):
 	speed=4
@@ -11,7 +25,7 @@ class MechanteBouleDeNeige(pygame.sprite.Sprite):
 		super().__init__()
 		self.x=x
 		self.y=y
-		self.image=pygame.image.load("boule_de_neige.png").convert_alpha()
+		self.image=pygame.image.load(resource_path("assets/boule_de_neige.png")).convert_alpha()
 		self.rect=self.image.get_rect()
 		self.rect.topleft=(self.x,self.y)
 
@@ -27,7 +41,7 @@ class Pave(pygame.sprite.Sprite):
 	y = 130
 	def __init__(self):
 		super().__init__()
-		self.image=pygame.image.load("giftWall.png").convert_alpha()
+		self.image=pygame.image.load(resource_path("assets/giftWall.png")).convert_alpha()
 		self.rect=self.image.get_rect()
 		self.rect.topleft=(self.x-4,self.y)
 
@@ -50,7 +64,7 @@ class Lutin(pygame.sprite.Sprite):
 		self.cd = random.randint(1,1000)
 		self.x = random.randint(200,800)
 		self.y = random.randint(SCREEN_HEIGHT//2,744)
-		self.image=pygame.image.load("lutin1.png").convert_alpha()
+		self.image=pygame.image.load(resource_path("assets/lutin1.png")).convert_alpha()
 		self.rect=self.image.get_rect()
 		self.rect.topleft=(self.x,self.y)
 
@@ -75,7 +89,7 @@ class BouleDeNeige(pygame.sprite.Sprite):
 		super().__init__()
 		self.x=x
 		self.y=y
-		self.image=pygame.image.load("boule_de_neige.png").convert_alpha()
+		self.image=pygame.image.load(resource_path("assets/boule_de_neige.png")).convert_alpha()
 		self.rect=self.image.get_rect()
 		self.rect.topleft=(self.x,self.y)
 
@@ -95,7 +109,7 @@ class PereNoel(pygame.sprite.Sprite):
 	cd = 20
 	def __init__(self):
 		super().__init__()
-		self.image=pygame.image.load("pereNoel.png").convert_alpha()
+		self.image=pygame.image.load(resource_path("assets/pereNoel.png").convert_alpha()
 		self.rect=self.image.get_rect()
 		self.rect.topleft=(self.x,self.y)
 

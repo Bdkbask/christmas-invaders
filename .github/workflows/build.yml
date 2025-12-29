@@ -1,17 +1,25 @@
-name: Build and Release Games
+name: Build Christmas and Space Invaders
 
-on: [push, workflow_dispatch] # workflow_dispatch permet de lancer manuellement
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  workflow_dispatch: # Permet de lancer le build manuellement si besoin
 
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        # On définit les deux fichiers source ici
+        file: [christmasInvader.py, SpaceInvaders.py]
 
     steps:
-      - name: Recupérer le code
-        uses: actions/checkout@v4  # 'uses' est obligatoire ici
+      - name: Récupérer le code
+        uses: actions/checkout@v4
 
       - name: Installer Python
-        uses: actions/setup-python@v5  # 'uses' est obligatoire ici
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -19,19 +27,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pygame pyinstaller
-        # 'run' est obligatoire pour lancer des commandes shell
 
       - name: Créer l'executable
-        run: pyinstaller --onefile --noconsole --add-data "assets;assets" christmasInvader.py
-        # Remplacez 'mon_jeu.py' par le nom de votre fichier principal
+        # --add-data "assets/*;." met les images à la racine de l'EXE 
+        # pour correspondre à votre erreur précédente
+        run: pyinstaller --onefile --noconsole --add-data "assets/*;." --name "${{ matrix.file == 'christmasInvader.py' && 'Christmas_Invaders' || 'Space_Invaders' }}" ${{ matrix.file }}
 
-      - name: Sauvegarder l'EXE 
+      - name: Sauvegarder l'Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: christmasInvaders
+          name: ${{ matrix.file == 'christmasInvader.py' && 'Christmas_Build' || 'Space_Build' }}
           path: dist/*.exe
 
-      - name: Créer une Release
+      - name: Créer/Modifier la Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
